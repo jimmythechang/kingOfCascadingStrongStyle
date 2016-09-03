@@ -80,7 +80,7 @@ span {
     transform: translate(-50%, 0%);
     width: 1300px;
     height: 100%;
-    background-image: url("filmstrip_new.jpg");
+    background-image: url("filmstrip.jpg");
     background-repeat: repeat-y;
     box-shadow: 0 0 8px 8px black inset;
 }

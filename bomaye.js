@@ -1,10 +1,14 @@
+/*
+ * Timing variables.
+ */
+var waveformDelay = 1700;
+var flashDelay = 8000;
+var filmstripDuration = 6000;
+var nameDelay = 1500;
+
 /**********
  * LIGHTS *
  **********/
-
-var flashDuration = 8000;
-var filmstripDuration = 6000;
-var nameDelay = 1500;
 
 /**
  * Returns a random int from a given interval.
@@ -15,6 +19,75 @@ var nameDelay = 1500;
  */
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min+1) + min);
+}
+
+/**
+ * Initializes the canvas.
+ * @returns {Element|initializeCanvas.canvas}
+ */
+function initializeCanvas() {
+    var canvas = document.getElementById("canvas");
+    canvas.width = window.innerWidth - 20;
+    canvas.height = window.innerHeight;
+    return canvas;
+}
+
+/**
+ * Draws the waveform.
+ */
+function drawWaveform() {
+    var canvas = initializeCanvas();
+    return setInterval(function() {
+            drawWaveformFrame(canvas);
+    }, 1000 / 24);
+}
+
+/**
+ * Draws one frame of the waveform.
+ * 
+ * @param {Element} canvas
+ */
+function drawWaveformFrame(canvas) {
+    var context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    context.strokeStyle = "#00FF00";
+    context.lineWidth = 1;
+    
+    context.beginPath();
+    
+    var center = canvas.width/2;
+    var y = -30;
+    context.moveTo(center, y);
+    
+    /*
+     * Generate points down the page.
+     */
+    for (var i = 0; i < 40; i++) {
+        y += canvas.height/40;
+        var xOffset = generateWaveformXOffset(i);
+        context.lineTo(center + xOffset, y); ;
+    }
+    
+    context.stroke();
+}
+
+/**
+ * Generate the x offset for the next point.
+ * 
+ * @param {int} index
+ * @returns {Number}
+ */
+function generateWaveformXOffset(index) {
+    /*
+     * Determines if the line is going "up" (really to the right).
+     */
+    var goingUp = index % 2 == 0;
+    var xOffset = randomIntFromInterval(5, 300);
+    if (!goingUp) {
+        xOffset = xOffset * -1;
+    }
+    return xOffset;
 }
 
 /**
@@ -37,7 +110,8 @@ function initializeFlash(x, y) {
 }
 
 /**
- * Generates a run of staggered flash batches.
+ * Generates a run of staggered flash batches. The rest of the 
+ * animations are triggered from this point.
  */
 function generateFlashes() {    
     var batchCountMax = 60;
@@ -72,7 +146,6 @@ function generateFlashBatch() {
         document.getElementById("flashContainer").appendChild(flash);
     }
 }
-
 
 /**********
  * CAMERA *
@@ -127,7 +200,6 @@ function escapeHtml(string) {
     else if (string.length > 21) {
         return "shorter_name";
     }
-    
     return string;
 }
 
@@ -247,13 +319,26 @@ function showName() {
     
     setTimeout(function() {
         showFilmstrip(true);
-    }, 1000);
+    }, 2000);
 }
 
 window.onload = function() {
-    //setTimeout(generateFlashes, flashDuration);
-    
-    showName();
-    
-    //setInterval(drawGraph, 1000 / 24);
+    /*
+     * Show the waveform.
+     */
+    var waveformInterval;
+    setTimeout(function() {
+        waveformInterval = drawWaveform();
+    }, waveformDelay);
+
+    /*
+     * Kill the waveform animation and queue the flashes.
+     */
+    setTimeout(function() {
+        clearInterval(waveformInterval);
+        var canvas = document.getElementById("canvas");
+        canvas.parentNode.removeChild(canvas);
+        
+        generateFlashes();
+    }, flashDelay);
 };
