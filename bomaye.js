@@ -78,6 +78,11 @@ function generateFlashBatch() {
  * CAMERA *
  **********/
 
+/**
+ * Displays the filmstrip.
+ * 
+ * @param {boolean} repeat determines if the filmstrip should run indefinitely
+ */
 function showFilmstrip(repeat) {
     var filmContainer = document.getElementById("filmContainer");
     filmContainer.style.display = "block";
@@ -105,13 +110,25 @@ function showFilmstrip(repeat) {
  */
 function getNameFromUrl() {
     var urlArray = document.URL.split("?");
+    var name = escapeHtml(urlArray[1]);
+    return name.split("_");
+}
+
+/**
+ * Can't trust anyone anymore
+ * 
+ * @param {string} string
+ * @returns {string}
+ */
+function escapeHtml(string) {
+    if (string == null || !string.includes("_") || string.match(/(&|<|>|"|'|\/)/)) {
+        return "shinsuke_nakamura";
+    }
+    else if (string.length > 21) {
+        return "shorter_name";
+    }
     
-    // TODO: escape input!
-    
-    var name = urlArray[urlArray.length - 1];
-    var nameArray = name.split("_");
-    
-    return nameArray;
+    return string;
 }
 
 /**
@@ -212,6 +229,9 @@ function getTimeBeforeNextLetter(element) {
     return totalTime / letterCount;
 }
 
+/**
+ * Calls functions responsible for setting up the name animation. 
+ */
 function showName() {
     var nameArray = getNameFromUrl();
     setName(nameArray);
@@ -231,8 +251,9 @@ function showName() {
 }
 
 window.onload = function() {
-    setTimeout(generateFlashes, flashDuration);
+    //setTimeout(generateFlashes, flashDuration);
     
+    showName();
     
     //setInterval(drawGraph, 1000 / 24);
 };
