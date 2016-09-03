@@ -1,0 +1,86 @@
+body {
+    background: #000;
+}
+
+canvas {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+}
+
+iframe {
+    display: none;
+}
+
+span {
+    display: inline-block;
+    position: relative;
+    opacity: 0;
+}
+
+#nameContainer {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#firstName {
+    font-size: 300px;
+}
+
+#lastName {
+    font-size: 260px;
+}
+
+.name {
+    font-family: tk-fira-sans-2-i7;
+    color: red;
+    margin-bottom: -30px;
+}
+
+@keyframes flash {
+    100% { transform: scale(0,0);}
+}
+
+.flash {
+    animation: flash 0.2s linear;
+    position: fixed;
+    background-image: url("flash.png");
+    background-size: contain;
+    height: 300px;
+    width: 300px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+#filmContainer {
+    display: none;
+}
+
+.fadeIn {
+    animation: fadeIn 1s;
+}
+
+@keyframes filmstrip {
+    from { background-position: 0px 0px;}
+    to { background-position: 0px -4411px; }
+}
+
+.filmstrip {
+    margin: 0;
+    animation: filmstrip 0.7s linear infinite;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 1300px;
+    height: 100%;
+    background-image: url("filmstrip_new.jpg");
+    background-repeat: repeat-y;
+    box-shadow: 0 0 8px 8px black inset;
+}
