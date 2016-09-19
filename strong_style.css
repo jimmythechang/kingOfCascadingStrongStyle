@@ -18,7 +18,19 @@ span {
     opacity: 0;
 }
 
+#mobileWarning {
+    color: red;
+    font-family: tk-fira-sans-2-i7;
+    text-align: center;
+    position: absolute;
+    font-size: 60px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    opacity: 0;
+}
+
 #nameContainer {
+    min-width: 1200px;
     width: 100%;
     position: absolute;
     top: 50%;

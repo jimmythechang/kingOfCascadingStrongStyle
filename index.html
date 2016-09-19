@@ -11,9 +11,14 @@
         <link rel="stylesheet" type="text/css" href="strong_style.css"/>
     </head>
     <body>
+        <div id="mobileWarning">BEST VIEWED ON A COMPUTER</div>
+        
         <canvas id="canvas"></canvas>
         
-        <div id="flashContainer"></div>
+        <div id="flashContainer">
+            <!-- A little preloading trickery... --> 
+            <img style="display:none" src="flash.png"/>
+        </div>
         <div id="filmContainer">
             <figure id="filmstrip" class="filmstrip"></figure>
         </div>
@@ -24,6 +29,5 @@
         
         <iframe src="https://www.youtube.com/embed/PJjZM5zFGuA?autoplay=1">
         </iframe>
-     
     </body>
 </html>

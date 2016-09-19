@@ -2,7 +2,7 @@
  * Timing variables.
  */
 var waveformDelay = 1700;
-var flashDelay = 8000;
+var flashDelay = 8300;
 var filmstripDuration = 6000;
 var nameDelay = 1500;
 
@@ -134,13 +134,15 @@ function generateFlashes() {
  */
 function generateFlashBatch() {
     var flashesPerBatch = randomIntFromInterval(2, 3);
+    var width = window.innerWidth - 300;
+    var height = window.innerHeight - 300;
 
     /*
      * Vary the number of flashes per run.
      */
     for (var i = 0; i < flashesPerBatch; i++) {
-        var x = randomIntFromInterval(0, 1600);
-        var y = randomIntFromInterval(0, 700);
+        var x = randomIntFromInterval(0, width);
+        var y = randomIntFromInterval(0, height);
 
         var flash = initializeFlash(x, y);
         document.getElementById("flashContainer").appendChild(flash);
@@ -244,7 +246,7 @@ function insertDynamicZoomAnimationIntoStylesheet(elementName, spanNumber, xOffs
     stylesheet.insertRule("@keyframes " + elementName + "_letterZoom_" + spanNumber + " {\n\
     from { opacity: 0; transform: perspective(800px) translateZ(150px) translateX(" + xOffset + "px) }\n\
     to { opacity: 1; transform: perspective(800px) translateZ(0px) translateX(0px); }\n\
-    }", stylesheet.rules.length); 
+    }", stylesheet.cssRules.length); 
 }
 
 /**
@@ -322,7 +324,20 @@ function showName() {
     }, 2000);
 }
 
+/**
+ * A non-comprehensive check for if the user is on a mobile device.
+ * @returns {Array}
+ */
+function isMobile() {
+    return navigator.userAgent.match(/Android|iPhone|iPad|Opera Mini|IEMobile/i);
+}
+
 window.onload = function() {
+    if (isMobile()) {
+        document.getElementById("mobileWarning").style.opacity = 1;
+        return;
+    }
+    
     /*
      * Show the waveform.
      */
