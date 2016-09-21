@@ -21,6 +21,7 @@ span {
 #mobileWarning {
     color: red;
     font-family: tk-fira-sans-2-i7;
+    font-style: italic;
     text-align: center;
     position: absolute;
     font-size: 60px;
@@ -49,6 +50,7 @@ span {
 
 .name {
     font-family: tk-fira-sans-2-i7;
+    font-style: italic;
     color: red;
     margin-bottom: -30px;
 }
